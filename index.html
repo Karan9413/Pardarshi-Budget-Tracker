@@ -1,0 +1,139 @@
+// 1. Function to Open/Close the Modal
+function toggleModal() {
+    const modal = document.getElementById('reportModal');
+    if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.children[0].classList.remove('scale-95');
+        }, 10);
+    } else {
+        modal.classList.add('opacity-0');
+        modal.children[0].classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+}
+
+// 2. Function to Send Data to Python Backend
+async function submitCorruptionReport(event) {
+    event.preventDefault(); // Prevent page reload
+
+    // Get values from the form fields
+    const category = document.querySelector('select').value;
+    const details = document.querySelector('textarea').value;
+    // Get pincode from the main search bar
+    const pincode = document.querySelector('input[placeholder*="Pincode"]').value || "302017";
+
+    const reportData = {
+        category: category,
+        details: details,
+        pincode: pincode
+    };
+
+    try {
+        // Change '127.0.0.1' to your IP if testing on a mobile phone
+        const response = await fetch('http://127.0.0.1:8000/submit-report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reportData),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert("✅ " + result.message);
+            toggleModal(); // Close popup on success
+            event.target.reset(); // Clear the form
+        } else {
+            alert("❌ Server error. Please check if main.py is running.");
+        }
+        
+    } catch (error) {
+        console.error("Connection Error:", error);
+        alert("❌ Could not connect to the Backend. Did you run 'python main.py'?");
+    }
+}
+
+// 3. Initialize Listeners when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Attach click event to all "Audit" buttons
+    document.querySelectorAll('button').forEach(btn => {
+        if(btn.innerText.includes('Audit')) {
+            btn.onclick = toggleModal;
+        }
+    });
+
+    // Attach submit event to the report form
+    const reportForm = document.querySelector('#reportModal form');
+    if (reportForm) {
+        reportForm.addEventListener('submit', submitCorruptionReport);
+    }
+});
+// Add this to your app.js
+async function loadRecentAlerts() {
+    const pincode = "302017"; // The pincode you want to track
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/get-alerts/${pincode}`);
+        const alerts = await response.json();
+        
+        const tableBody = document.querySelector('tbody');
+        // Clear the table first if you want, or just append
+        // tableBody.innerHTML = ''; 
+
+        alerts.forEach(alert => {
+            const row = `
+                <tr class="hover:bg-red-50 transition">
+                    <td class="px-6 py-4">
+                        <div class="font-bold text-red-800">${alert[1]}</div>
+                        <div class="text-xs text-slate-500">${alert[2]}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">Flagged by Citizen</span>
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-slate-700">Audit Pending</td>
+                    <td class="px-6 py-4">
+                        <div class="w-full bg-slate-100 rounded-full h-2 w-24">
+                            <div class="bg-orange-500 h-2 rounded-full" style="width: 10%"></div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <span class="text-xs text-slate-400">${new Date(alert[4]).toLocaleDateString()}</span>
+                    </td>
+                </tr>
+            `;
+            tableBody.insertAdjacentHTML('afterbegin', row);
+        });
+    } catch (error) {
+        console.log("Could not load alerts yet.");
+    }
+}
+// Call this when the page loads
+document.addEventListener('DOMContentLoaded', loadRecentAlerts);
+// Function to check status of a specific report
+async function checkStatus() {
+    const auditId = document.getElementById('statusInput').value;
+    if(!auditId) return alert("Please enter an ID");
+
+    try {
+        // We'll assume the Audit ID corresponds to the row ID in your SQLite database
+        const response = await fetch(`http://127.0.0.1:8000/report-status/${auditId}`);
+        const result = await response.json();
+
+        if (response.ok) {
+            // SweetAlert or simple alert for the demo
+            alert(`
+                Status for Audit ID ${auditId}:
+                Current Stage: ${result.status}
+                Last Updated: ${new Date(result.timestamp).toLocaleDateString()}
+                Action: Assigned to District Magistrate
+            `);
+        } else {
+            alert("Audit ID not found. Please double-check.");
+        }
+    } catch (error) {
+        alert("Unable to connect to server.");
+    }
+}
