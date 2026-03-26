@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 1. Function to Open/Close the Modal
 function toggleModal() {
     const modal = document.getElementById('reportModal');
@@ -137,3 +138,156 @@ async function checkStatus() {
         alert("Unable to connect to server.");
     }
 }
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pardarshi | Budget Transparency Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 hidden md:block">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold text-indigo-700">Pardarshi<span class="text-orange-500">.</span></h1>
+            <p class="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1">India Budget Tracker</p>
+        </div>
+        <nav class="mt-4 px-4 space-y-2">
+            <a href="#" class="flex items-center space-x-3 bg-indigo-50 text-indigo-700 p-3 rounded-xl font-medium">
+                <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 text-slate-500 hover:bg-slate-50 p-3 rounded-xl transition">
+                <i class="fa-solid fa-map-location-dot"></i> <span>Local Projects</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 text-slate-500 hover:bg-slate-50 p-3 rounded-xl transition">
+                <i class="fa-solid fa-shield-halved"></i> <span>Corruption Alerts</span>
+            </a>
+        </nav>
+    </aside>
+    <main class="md:ml-64 p-8">
+    
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800">Pardarshi Dashboard</h2>
+            <p class="text-slate-500">Real-time transparency for <span class="text-indigo-600 font-bold">Jaipur Division</span></p>
+        </div>
+        
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-indigo-100 flex items-center gap-3">
+            <input type="text" id="statusInput" placeholder="Enter Audit ID..." 
+                class="bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-400">
+            <button onclick="checkStatus()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition">
+                Check Status
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+        <div class="bg-gradient-to-br from-indigo-600 to-blue-700 p-6 rounded-3xl text-white shadow-xl">
+            <i class="fa-solid fa-coins text-2xl mb-4 opacity-80"></i>
+            <h3 class="text-indigo-100 text-xs font-bold uppercase">Total Budget</h3>
+            <p class="text-2xl font-black">₹1,240 Cr</p>
+        </div>
+        </div>
+
+    <h3 class="font-bold text-xl mb-6 text-slate-800 flex items-center gap-2">
+        <i class="fa-solid fa-camera-retro text-indigo-500"></i> Local Evidence Gallery
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition">
+            <img src="https://images.unsplash.com/photo-1590487988256-9ed24133863e?auto=format&fit=crop&w=800&q=80" alt="Road Construction" class="w-full h-40 object-cover">
+            <div class="p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-slate-800 text-lg leading-tight">Mansarovar Flyover</h4>
+                    <span class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-black uppercase">Critical Risk</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Report: "Cracks appearing in 2 months of completion."</p>
+                <button onclick="toggleModal()" class="w-full py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-200">Submit Photo Evidence</button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition">
+            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=800&q=80" alt="Building" class="w-full h-40 object-cover">
+            <div class="p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-slate-800 text-lg leading-tight">GEC Jaipur Tech Lab</h4>
+                    <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-[10px] font-black uppercase">Safe</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Latest Audit: "Materials verified by 14 students."</p>
+                <button onclick="toggleModal()" class="w-full py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-200">View Audit Log</button>
+            </div>
+        </div>
+    </div>
+</main>
+    
+<div id="reportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-red-50">
+                <h3 class="font-bold text-xl text-red-700"><i class="fa-solid fa-shield-virus mr-2"></i> Report Discrepancy</h3>
+                <button onclick="toggleModal()" class="text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+            </div>
+            
+            <form class="p-8 space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Issue Category</label>
+                    <select class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-red-500">
+                        <option>Ghost Project (Not started but paid)</option>
+                        <option>Poor Quality Materials</option>
+                        <option>Timeline Delay / Abandoned</option>
+                        <option>Contractor Overcharging</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Evidence (Photo/Video)</label>
+                    <div class="border-2 border-dashed border-slate-200 rounded-xl p-6 text-center hover:bg-slate-50 transition cursor-pointer">
+                        <i class="fa-solid fa-cloud-arrow-up text-slate-400 text-3xl mb-2"></i>
+                        <p class="text-xs text-slate-500 font-medium">Click to upload GPS-tagged media</p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Additional Details</label>
+                    <textarea placeholder="Explain what you observed on site..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-red-500 h-24"></textarea>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="toggleModal()" class="flex-1 py-3 border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50">Cancel</button>
+                    <button type="submit" class="flex-1 py-3 bg-red-600 text-white rounded-xl font-bold shadow-lg shadow-red-200 hover:bg-red-700 transition">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleModal() {
+            const modal = document.getElementById('reportModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.children[0].classList.remove('scale-95');
+                }, 10);
+            } else {
+                modal.classList.add('opacity-0');
+                modal.children[0].classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Add the click event to your "Audit" buttons
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.innerText.includes('Audit')) {
+                btn.onclick = toggleModal;
+            }
+        });
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
+>>>>>>> 0a6e24b (initial commit for pardarshi Hackathon project)
